@@ -51,11 +51,7 @@ bool HelloWorld::init()
 
     Layer = Node::create();
     this->addChild(Layer,160);
-    LayerColor *c = LayerColor::create(Color4B::BLACK);
-    Layer->addChild(c);
-    c->setOpacity(160);
-    Sprite *bg = Sprite::create("shop_bg.png");
-    // bg->setScale(1.2);
+    Sprite *bg = Sprite::create("HelloWorld.png");
     bg->setPosition(Point(VisibleRect::center().x,VisibleRect::center().y));
 
 
@@ -75,9 +71,16 @@ bool HelloWorld::init()
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener,Layer);
 	{
-		ControlButton *price = ControlButton::create("看视频","ws.ttf", 13);
+
+        Scale9Sprite* btnNormal = Scale9Sprite::create("price_coin.png");
+
+        LabelTTF* title = LabelTTF::create("一分钱块钱100金币","ws.ttf",13);
+
+        ControlButton* price = ControlButton::create(title,btnNormal);
+
+//		ControlButton *price = ControlButton::create("一分钱块钱100金币","ws.ttf", 13);
 	    Layer->addChild(price);
-	    price->setPosition(bg->getPosition().x,bg->getPosition().y-70);
+	    price->setPosition(bg->getPosition().x,bg->getPosition().y-120);
 	    price->setTitleColorForState(Color3B(255,255,255), Control::State::NORMAL);
 	    price->addTargetWithActionForControlEvents(this, cccontrol_selector(HelloWorld::buyDone), Control::EventType::TOUCH_DOWN);
 

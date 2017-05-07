@@ -48,13 +48,10 @@ public class AppActivity extends Cocos2dxActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//妯睆锛氭牴鎹紶鎰熷櫒妯悜鍒囨崲
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
-        /**
-         * SDK鍒濆鍖? 锛岃鏀惧湪娓告垙鍚姩鐣岄潰
-         */
-        IAppPay.init(AppActivity.this, IAppPay.PORTRAIT, PayConfig.appid);//鎺ュ叆鏃讹紒涓嶈浣跨敤Demo涓殑appid
+        IAppPay.init(AppActivity.this, IAppPay.PORTRAIT, PayConfig.appid);
     }
     
     private static AppActivity instance = new AppActivity();
@@ -80,9 +77,6 @@ public class AppActivity extends Cocos2dxActivity {
 
     }
 
-    /**
-     * 鏀粯缁撴灉鍥炶皟
-     */
     IPayResultCallback iPayResultCallback = new IPayResultCallback() {
 
         @Override
@@ -90,31 +84,27 @@ public class AppActivity extends Cocos2dxActivity {
             // TODO Auto-generated method stub
             switch (resultCode) {
                 case IAppPay.PAY_SUCCESS:
-                    //璋冪敤 IAppPayOrderUtils 鐨勯獙绛炬柟娉曡繘琛屾敮浠樼粨鏋滈獙璇?
                     boolean payState = IAppPayOrderUtils.checkPayResult(signvalue, PayConfig.publicKey);
                     if(payState){
-                        Toast.makeText(AppActivity.getContext(), "鏀粯鎴愬姛", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AppActivity.getContext(), "支付成功", Toast.LENGTH_LONG).show();
                     }
                     break;
                 default:
                     Toast.makeText(AppActivity.getContext(), resultInfo, Toast.LENGTH_LONG).show();
                     break;
             }
-            Log.d("MainDemoActivity", "requestCode:" + resultCode + ",signvalue:" + signvalue + ",resultInfo:" + resultInfo);
+            Log.d("AppActivity", "requestCode:" + resultCode + ",signvalue:" + signvalue + ",resultInfo:" + resultInfo);
         }
     };
 
-
-    /** 鑾峰彇鏀堕摱鍙板弬鏁? */
     private String getTransdata( String appuserid, String cpprivateinfo, int waresid, float price, String cporderid) {
-        //璋冪敤 IAppPayOrderUtils getTransdata() 鑾峰彇鏀粯鍙傛暟
         IAppPayOrderUtils orderUtils = new IAppPayOrderUtils();
         orderUtils.setAppid(PayConfig.appid);
-        orderUtils.setWaresid(waresid);//浼犲叆鎮ㄥ晢鎴峰悗鍙板垱寤虹殑鍟嗗搧缂栧彿
+        orderUtils.setWaresid(waresid);
         orderUtils.setCporderid(cporderid);
         orderUtils.setAppuserid(appuserid);
-        orderUtils.setPrice(price);//鍗曚綅 鍏?
-        orderUtils.setWaresname("鑷畾涔夊悕绉?");//寮?鏀句环鏍煎悕绉?(鐢ㄦ埛鍙嚜瀹氫箟锛屽鏋滀笉浼犱互鍚庡彴閰嶇疆涓哄噯)
+        orderUtils.setPrice(price);
+        orderUtils.setWaresname("100金币");
         orderUtils.setCpprivateinfo(cpprivateinfo);
         return orderUtils.getTransdata(PayConfig.privateKey);
     }
